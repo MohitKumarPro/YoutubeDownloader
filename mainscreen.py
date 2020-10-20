@@ -31,6 +31,8 @@ canvas1.create_window(200, 140, window=entry1)
 
 def processdownload(stream=None,chunk=None ,bytes_remaining=None):
     global per 
+    root.update()
+    bar['value']=per
     per = 100*((filesi-bytes_remaining)/filesi)
     button1['text']="{}".format(per)
     button1['state']="disable"
@@ -38,6 +40,7 @@ def oncomplete(stream=None ,file_path=None):
     messagebox.showinfo("message","file has been downloaded")
     entry1.delete("0","end")
     button1['text']="Download"
+    bar['value']=0
     button1['state']= "active"
     
 def getSquareRoot ():
@@ -49,8 +52,10 @@ def getSquareRoot ():
     youtube_video_url = entry1.get()
     
     try:
-         yt_obj = YouTube(youtube_video_url)
          
+         
+         yt_obj = YouTube(youtube_video_url)
+
          filters = yt_obj.streams.first()
          filesi  = filters.filesize
         
@@ -64,6 +69,7 @@ def getSquareRoot ():
     
 
 button1 = tk.Button(text='Download', command=getSquareRoot, bg='brown', fg='white', font=('helvetica', 9, 'bold'))
+
 
 canvas1.create_window(200, 180, window=button1)
 
